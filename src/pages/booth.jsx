@@ -25,6 +25,7 @@ function Booth() {
       loadShotCount()
     }
     return () => stopCamera()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEvent])
 
   const fetchEvents = async () => {
@@ -128,7 +129,7 @@ function Booth() {
       <html>
         <body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh;">
           <img src="${imageUrl}" style="max-width:100%;max-height:100vh;object-fit:contain;" />
-          <script>window.onload=function(){window.print();window.close()}<\/script>
+          <script>window.onload=function(){window.print();window.close()}</script>
         </body>
       </html>
     `)
