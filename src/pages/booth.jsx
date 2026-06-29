@@ -42,13 +42,14 @@ async function prepareImageBlob(sourceCanvas) {
   ctx.drawImage(src, sx, sy, sw, sh, 0, 0, INSTAX_WIDTH, INSTAX_HEIGHT)
 
   // Reduce quality until ≤ 65535 bytes
-  let quality = 0.92
-  let blob
-  do {
-    blob = await new Promise((r) => out.toBlob(r, 'image/jpeg', quality))
-    quality -= 0.05
-  } while (blob.size > 65535 && quality > 0.1)
-  return blob
+const toBlob = (q) => new Promise((r) => out.toBlob(r, 'image/jpeg', q))
+let quality = 0.92
+let blob = await toBlob(quality)
+while (blob.size > 65535 && quality > 0.1) {
+  quality -= 0.05
+  blob = await toBlob(quality)
+}
+return blob
 }
 
 function Booth() {
